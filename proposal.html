@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenIntervue Integration Benefits & ROI - EY</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 400;
+            line-height: 1.7;
+            color: #1f2937;
+            background: #111827;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow: hidden;
+        }
+
+        /* Slides Container */
+        .slides-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.5s ease-in-out;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide.prev {
+            transform: translateX(-100%);
+        }
+
+        .slide-content {
+            max-width: 1000px;
+            width: 100%;
+            text-align: center;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Slide 1 - Title */
+        .slide-1 {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+        }
+
+        .slide-1 h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 32px;
+            letter-spacing: -0.03em;
+            color: #ffffff;
+            text-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideInFromTop 0.8s ease-out;
+        }
+
+        .slide-1 p {
+            font-size: 1.3rem;
+            color: #e5e7eb;
+            max-width: 700px;
+            margin: 0 auto;
+            font-weight: 400;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        @keyframes slideInFromTop {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInFromLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Slide 2 - Benefits */
+        .slide-2 {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+        }
+
+        .slide-2 h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: #ffffff;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            letter-spacing: -0.02em;
+            animation: slideInFromLeft 0.8s ease-out 0.2s both;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-top: 32px;
+        }
+
+        .benefits-grid .benefit-card:nth-child(1) {
+            animation: slideInFromBottom 0.8s ease-out 0.6s both;
+        }
+
+        .benefits-grid .benefit-card:nth-child(2) {
+            animation: slideInFromBottom 0.8s ease-out 0.8s both;
+        }
+
+        .benefits-grid .benefit-card:nth-child(3) {
+            animation: slideInFromBottom 0.8s ease-out 1.0s both;
+        }
+
+        @keyframes slideInFromBottom {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .benefit-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 36px;
+            text-align: left;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: #1f2937;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #059669, #10b981, #34d399);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .benefit-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .benefit-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            display: block;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+        }
+
+        .benefit-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #111827;
+            letter-spacing: -0.02em;
+        }
+
+        .benefit-description {
+            font-size: 1.1rem;
+            color: #4b5563;
+            line-height: 1.7;
+            font-weight: 400;
+        }
+
+        /* Slide 3 - ROI Comparison */
+        .slide-3 {
+            background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+        }
+
+        .slide-3 h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: #ffffff;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            letter-spacing: -0.02em;
+            animation: slideInFromLeft 0.8s ease-out 0.2s both;
+        }
+
+        .roi-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            margin-top: 32px;
+        }
+
+        .roi-grid .roi-card:nth-child(1) {
+             animation: slideInFromBottom 0.8s ease-out 0.6s both;
+         }
+ 
+         .roi-grid .roi-card:nth-child(2) {
+             animation: slideInFromBottom 0.8s ease-out 0.8s both;
+         }
+
+         .roi-grid .roi-card:nth-child(3) {
+             animation: slideInFromBottom 0.8s ease-out 1.0s both;
+         }
+
+         .roi-grid .roi-card:nth-child(4) {
+             animation: slideInFromBottom 0.8s ease-out 1.2s both;
+         }
+
+        .roi-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: #1f2937;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .roi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #2563eb, #3b82f6, #60a5fa);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .roi-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .roi-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .roi-card-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            text-align: center;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #e5e7eb;
+            color: #111827;
+        }
+
+        .roi-metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .roi-metric:last-child {
+            border-bottom: none;
+        }
+
+        .roi-label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .roi-value {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #111827;
+        }
+
+        .roi-number {
+             font-size: 3.5rem;
+             font-weight: 800;
+             color: #2563eb;
+             margin-bottom: 12px;
+             text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+             letter-spacing: -0.02em;
+         }
+
+         .roi-label {
+             font-size: 1.3rem;
+             font-weight: 700;
+             color: #111827;
+             margin-bottom: 12px;
+             letter-spacing: -0.01em;
+         }
+ 
+         .roi-description {
+             font-size: 1rem;
+             color: #6b7280;
+             line-height: 1.6;
+             font-weight: 400;
+         }
+
+        /* Slide 4 - Conclusion */
+        .slide-4 {
+            background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+        }
+
+        .slide-4 h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: #ffffff;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            letter-spacing: -0.02em;
+            animation: slideInFromLeft 0.8s ease-out 0.2s both;
+        }
+
+        .slide-4 p {
+            font-size: 1.5rem;
+            color: #f3f4f6;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .slide-4 strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .callout {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 56px;
+            text-align: center;
+            margin-top: 48px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: #1f2937;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+            animation: slideInFromBottom 0.8s ease-out 0.6s both;
+        }
+
+        .callout::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #8b5cf6, #a78bfa, #c4b5fd);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .callout:hover::before {
+            transform: scaleX(1);
+        }
+
+        .callout h3 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #111827;
+            letter-spacing: -0.02em;
+        }
+
+        .callout p {
+            font-size: 1.2rem;
+            color: #4b5563;
+            margin-bottom: 40px;
+            line-height: 1.7;
+            font-weight: 400;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+            color: white;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 8px 32px rgba(139, 92, 246, 0.3);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            letter-spacing: 0.5px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 16px 48px rgba(139, 92, 246, 0.4);
+            background: linear-gradient(135deg, #7c3aed, #8b5cf6);
+        }
+
+        .cta-button:active {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        /* Navigation */
+        .nav-container {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .nav-btn:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .nav-btn:disabled:hover {
+            transform: none;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Slide Indicators */
+        .slide-indicators {
+            position: fixed;
+            bottom: 110px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 16px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 12px 20px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .indicator {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .indicator:hover {
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(1.1);
+        }
+
+        .indicator.active {
+            background: white;
+            transform: scale(1.3);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .indicator.active::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.4);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .slide-1 h1 {
+                font-size: 2.5rem;
+            }
+
+            .slide-1 p {
+                font-size: 1.2rem;
+            }
+
+            .slide-2 h2, .slide-3 h2, .slide-4 h2 {
+                font-size: 2rem;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .roi-comparison {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .benefit-card, .roi-card {
+                padding: 24px;
+            }
+
+            .slide-4 p {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slide {
+                padding: 20px;
+            }
+
+            .slide-1 h1 {
+                font-size: 2rem;
+            }
+
+            .slide-1 p {
+                font-size: 1rem;
+            }
+
+            .slide-2 h2, .slide-3 h2, .slide-4 h2 {
+                font-size: 1.5rem;
+            }
+
+            .benefit-title {
+                font-size: 1.2rem;
+            }
+
+            .benefit-description {
+                font-size: 0.9rem;
+            }
+
+            .roi-card-title {
+                font-size: 1.3rem;
+            }
+
+            .slide-4 p {
+                font-size: 1rem;
+            }
+
+            .nav-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .slide.active .slide-content {
+            animation: slideInRight 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="slides-container">
+        <!-- Slide 1: Title -->
+        <div class="slide slide-1 active">
+            <div class="slide-content">
+                <h1>OpenIntervue Integration</h1>
+                <p>Accelerating EY's hiring process with smarter, faster requisition workflows</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: Benefits -->
+        <div class="slide slide-2">
+            <div class="slide-content">
+                <h2>Key Benefits</h2>
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">⚡</div>
+                        <h3 class="benefit-title">96% Faster Turnaround</h3>
+                        <p class="benefit-description">Job descriptions generated in under 10 minutes instead of 2+ days</p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🎯</div>
+                        <h3 class="benefit-title">AI-Powered Quality</h3>
+                        <p class="benefit-description">Tailored job descriptions that improve candidate matching accuracy</p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">⚙️</div>
+                        <h3 class="benefit-title">Streamlined Process</h3>
+                        <p class="benefit-description">Single-step workflow eliminating iBuild dependency and manual handoffs</p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🔗</div>
+                        <h3 class="benefit-title">Seamless Integration</h3>
+                        <p class="benefit-description">Direct API sync with existing iRecruit and SuccessFactors systems</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: ROI Comparison -->
+        <div class="slide slide-3">
+            <div class="slide-content">
+                <h2>Before vs After</h2>
+                <div class="roi-comparison">
+                    <div class="roi-card">
+                        <h3 class="roi-card-title">Current State</h3>
+                        <div class="roi-metric">
+                            <span class="roi-label">Time to publish</span>
+                            <span class="roi-value">2-3 days</span>
+                        </div>
+                        <div class="roi-metric">
+                            <span class="roi-label">Manual steps</span>
+                            <span class="roi-value">Multiple tools</span>
+                        </div>
+                        <div class="roi-metric">
+                            <span class="roi-label">Team coordination</span>
+                            <span class="roi-value">Required</span>
+                        </div>
+                        <div class="roi-metric">
+                            <span class="roi-label">Quality consistency</span>
+                            <span class="roi-value">Variable</span>
+                        </div>
+                    </div>
+                    
+                    <div class="roi-card">
+                        <h3 class="roi-card-title">With OpenIntervue</h3>
+                        <div class="roi-metric">
+                            <span class="roi-label">Time to publish</span>
+                            <span class="roi-value">< 15 minutes</span>
+                        </div>
+                        <div class="roi-metric">
+                            <span class="roi-label">Manual steps</span>
+                            <span class="roi-value">Automated</span>
+                        </div>
+                        <div class="roi-metric">
+                            <span class="roi-label">Team coordination</span>
+                            <span class="roi-value">None needed</span>
+                        </div>
+                        <div class="roi-metric">
+                            <span class="roi-label">Quality consistency</span>
+                            <span class="roi-value">AI-optimized</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Conclusion -->
+        <div class="slide slide-4">
+            <div class="slide-content">
+                <h2>Ready to Transform</h2>
+                <p>Aligning with EY's digital transformation vision through AI-driven hiring excellence</p>
+                <br>
+                <p><strong>Built to integrate. Designed for results. Ready to scale.</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-container">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">
+            <span>←</span> Previous
+        </button>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">
+            Next <span>→</span>
+        </button>
+    </div>
+
+    <!-- Slide Indicators -->
+    <div class="slide-indicators">
+        <div class="indicator active" onclick="currentSlide(1)"></div>
+        <div class="indicator" onclick="currentSlide(2)"></div>
+        <div class="indicator" onclick="currentSlide(3)"></div>
+        <div class="indicator" onclick="currentSlide(4)"></div>
+    </div>
+
+    <script>
+        let currentSlideIndex = 1;
+        const totalSlides = 4;
+
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            const indicators = document.querySelectorAll('.indicator');
+            
+            if (n > totalSlides) currentSlideIndex = 1;
+            if (n < 1) currentSlideIndex = totalSlides;
+            
+            // Hide all slides
+            slides.forEach(slide => {
+                slide.classList.remove('active', 'prev');
+            });
+            
+            // Remove active class from all indicators
+            indicators.forEach(indicator => {
+                indicator.classList.remove('active');
+            });
+            
+            // Show current slide
+            slides[currentSlideIndex - 1].classList.add('active');
+            indicators[currentSlideIndex - 1].classList.add('active');
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentSlideIndex === 1;
+            document.getElementById('nextBtn').disabled = currentSlideIndex === totalSlides;
+        }
+
+        function changeSlide(n) {
+            currentSlideIndex += n;
+            showSlide(currentSlideIndex);
+        }
+
+        function currentSlide(n) {
+            currentSlideIndex = n;
+            showSlide(currentSlideIndex);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowLeft') {
+                changeSlide(-1);
+            } else if (event.key === 'ArrowRight') {
+                changeSlide(1);
+            }
+        });
+
+        // Initialize
+        showSlide(currentSlideIndex);
+    </script>
+</body>
+</html>
